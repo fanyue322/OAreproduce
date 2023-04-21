@@ -193,7 +193,9 @@ GRM=as.matrix(GRM)
 
 library(GMMAT)
 geno<-read.table('/home/public/data/OA/manuscript/deconvolution/GWAS/geno/merge.bim')
-snplist=geno$V2
-model0<-glmmkin(disease~Sex+Age+PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+
-PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20,data=cov,kins=GRM,
-id="eid",family=binomial(link="logit"),snps=snplist)                          
+model0<-glmmkin(fixed=disease~Sex+PC1+PC2+PC3+PC4+PC5+PC6+PC7+
+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20,data=pheno,kins=GRM,id="eid",family=binomial(link="logit"))
+
+glmm.score(model0,infile=geno.file,outfile="glm.score.testoutfile.txt",infile.nrow.skip=5,
+infile.ncol.skip=3,infile.ncol.print=1:3,infile.header.print=c("SNP","Allele1","Allele2"))
+                       
